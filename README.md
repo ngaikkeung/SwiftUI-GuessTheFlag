@@ -1,6 +1,6 @@
 # GuessTheFlag
 
-GuessTheFlage is a country flag matching game.
+GuessTheFlag is a country flag matching game.
 
 ## Content
 It prompts player to tapped the corresponding flag and count the score.
