@@ -3,9 +3,9 @@
 GuessTheFlag is a country flag matching game.
 
 ## Content
-It prompts player to tapped the corresponding flag and count the score.
+It prompts player to tap the corresponding flag and count the score.
 
-Each time will generate 3 random country flags and an new counry name for matching.
+Each time will generate 3 random country flags and an new country name for matching.
 
 
 ## SwiftUI functionality used
