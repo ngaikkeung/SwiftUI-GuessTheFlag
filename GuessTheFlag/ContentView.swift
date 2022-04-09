@@ -8,14 +8,26 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var showingScore = false
+    static let GAME_OVER_COUNT = 8
+    
     @State private var scoreTitle = ""
+    
+    @State private var showingScore = false
+    @State private var isGameOver = false
+    
     @State private var currentScore = 0
+    @State private var answedCount = 0
     @State private var highestScore: Int?
     
     @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Russia", "Spain", "UK", "US"].shuffled()
     @State private var correctAnswer = Int.random(in: 0...2)
 
+    var progressString: String {
+        let count = (answedCount + 1) >= ContentView.GAME_OVER_COUNT ? ContentView.GAME_OVER_COUNT : (answedCount + 1)
+        
+        return "Question: \(count)/\(ContentView.GAME_OVER_COUNT)"
+    }
+    
     var body: some View {
         ZStack {
             RadialGradient(stops: [
@@ -58,6 +70,11 @@ struct ContentView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 
                 Spacer()
+                
+                Text(progressString)
+                    .foregroundColor(.white)
+                    .font(.title3.bold())
+                
                 Spacer()
                 
                 HStack() {
@@ -74,16 +91,19 @@ struct ContentView: View {
                         .font(.title3.bold())
                 }
                 
-                
                 Spacer()
             }
             .padding()
         }
         .alert(scoreTitle, isPresented: $showingScore) {
             Button("Continue", action: askQuestion)
-            Button("Reset", role: .cancel, action: reset)
         } message: {
             Text("Your score is \(currentScore)")
+        }
+        .alert("Game Over!", isPresented: $isGameOver) {
+            Button("Restart", action: reset)
+        } message: {
+            Text("Your final score is \(currentScore)")
         }
     }
     
@@ -92,10 +112,12 @@ struct ContentView: View {
             scoreTitle = "Correct!"
             currentScore += 1
         } else {
-            scoreTitle = "Wrong!"
+            scoreTitle = "Wrong! \n That's the flag of \(countries[number])"
         }
         
-        showingScore = true
+        answedCount += 1
+        isGameOver = answedCount >= ContentView.GAME_OVER_COUNT
+        showingScore = !isGameOver
     }
 
     func askQuestion() {
@@ -104,11 +126,16 @@ struct ContentView: View {
     }
     
     func reset() {
+        // update higest score
         if(currentScore > highestScore ?? 0) {
             highestScore = currentScore
         }
         
+        // reset to initial state
         currentScore = 0
+        answedCount = 0
+        showingScore = false
+        isGameOver = false
         askQuestion()
     }
 }

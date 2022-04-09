@@ -29,5 +29,7 @@ Each time will generate 3 random country flags and an new country name for match
 
 ![image](https://github.com/ngaikkeung/SwiftUI-GuessTheFlag/blob/main/Screenshot/highest_score.png?raw=true)
 
+![image](https://github.com/ngaikkeung/SwiftUI-GuessTheFlag/blob/main/Screenshot/game_over.png?raw=true)
+
 ## Study Resource
 [Hacking with Swift](https://www.hackingwithswift.com)
